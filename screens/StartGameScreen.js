@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
@@ -18,6 +17,7 @@ const StartGameScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
+
   const numberInputHandler = (inputText) => {
     setEnteredValue(inputText.replace(/[^0-9]/g, ""));
   };
@@ -38,7 +38,7 @@ const StartGameScreen = (props) => {
       return;
     }
     setConfirmed(true);
-    setSelectedNumber(parseInt(enteredValue));
+    setSelectedNumber(parseInt(chosenNumber));
     setEnteredValue("");
     Keyboard.dismiss();
   };
@@ -50,7 +50,7 @@ const StartGameScreen = (props) => {
       <Card style={styles.summaryContainer}>
         <Text>You Selected</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="START GAME"/>
+        <Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)} />
       </Card>
     );
   }
@@ -63,7 +63,7 @@ const StartGameScreen = (props) => {
       <View style={styles.screen}>
         <Text style={styles.title}>Start a new Game</Text>
         <Card style={styles.inputView}>
-          <Text>Add a Number</Text>
+          <Text>Select a Number</Text>
           <Input
             style={styles.input}
             blurOnSubmit
@@ -78,7 +78,7 @@ const StartGameScreen = (props) => {
               <Button
                 title='Start'
                 color={Colors.primary}
-                onPress={() => onStartGame(selectedNumber)}
+                onPress={confirmInputHandler}
               />
             </View>
             <View style={styles.button}>
